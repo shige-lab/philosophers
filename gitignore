@@ -1,6 +1,0 @@
-*.a
-*.o
-*.py
-*.cpp
-.gitignore
-README.md
