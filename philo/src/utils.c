@@ -25,3 +25,12 @@ void	put_log(pthread_mutex_t *log, char *action, size_t pthread_index)
 	printf("%zu %zu %s\n", get_current_time(), pthread_index + 1, action);
 	pthread_mutex_unlock(log);
 }
+
+void	action_time(size_t time)
+{
+	size_t	start;
+
+	start = get_current_time();
+	while (get_current_time() - start < time)
+		usleep(100);
+}
