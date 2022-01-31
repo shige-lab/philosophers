@@ -41,7 +41,7 @@ typedef struct s_philo
 	size_t	sleep_time;
 	size_t	*last_eat;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	act;
+//	pthread_mutex_t	act;
 	pthread_mutex_t	log;
 	pthread_mutex_t	_num_x;
 }	t_philo;
@@ -51,7 +51,8 @@ size_t	get_current_time(void);
 void	put_log(pthread_mutex_t *log, char *action, size_t pthread_index);
 
 int		eating(t_philo *philo, size_t pthread_index);
-void	init_last_eat(size_t *last_eat, size_t pthread_num);
+void	init_last_eat(t_philo *philo, size_t pthread_num);
 void	action_time(size_t time);
+void	set_num_x(t_philo *philo);
 
 #endif
