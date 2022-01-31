@@ -41,6 +41,9 @@ bool	can_get_forks(t_philo *philo, size_t th_index)
 	size_t	left_index;
 	bool	flag;
 
+	flag = false;
+	if (philo->eat_limit && philo->eat_limit == philo->eat_times[th_index])
+		return (flag);
 	left_index = get_left_index(philo->th_num, th_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{

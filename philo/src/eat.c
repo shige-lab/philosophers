@@ -12,12 +12,6 @@ int	eating(t_philo *philo, size_t th_index)
 	pthread_mutex_unlock(&philo->fork[left_index]);
 	if (philo->eat_limit)
 		philo->eat_times[th_index] += 1;
-	if (philo->eat_limit < philo->eat_times[th_index])
-	{
-		put_log(&philo->log, "died", th_index, "\033[035m");
-		philo->is_dead = true;
-		return (DEAD);
-	}
 	return (0);
 }
 
