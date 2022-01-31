@@ -21,22 +21,22 @@ int	get_info_from_argv(t_philo *philo, char **argv)
 	return (0);
 }
 
-bool	can_get_forks(t_philo *philo, size_t pthread_index)
+bool	can_get_forks(t_philo *philo, size_t th_index)
 {
 	size_t	left_index;
 	bool	flag;
-	left_index = get_left_index(philo->pthread_num, pthread_index);
+	left_index = get_left_index(philo->pthread_num, th_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
-		put_log(&philo->log, "has taken a fork", pthread_index);
-		if (pthread_mutex_lock(&philo->fork[pthread_index]) != 0)
+		put_log(&philo->log, "has taken a fork", th_index);
+		if (pthread_mutex_lock(&philo->fork[th_index]) != 0)
 		{
 			pthread_mutex_unlock(&philo->fork[left_index]);
 			flag = false;
 		}
 		else
 		{
-			put_log(&philo->log, "has taken a fork", pthread_index);
+			put_log(&philo->log, "has taken a fork", th_index);
 			flag = true;
 		}
 	}

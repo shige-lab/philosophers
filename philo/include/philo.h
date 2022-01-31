@@ -34,26 +34,25 @@ typedef struct s_philo
 {
 	bool			is_dead;
 	size_t			num_x;
-//	t_data			data;
-	size_t	pthread_num;
-	size_t	eat_time;
-	size_t	die_time;
-	size_t	sleep_time;
-	size_t	*last_eat;
+	size_t			pthread_num;
+	size_t			eat_time;
+	size_t			die_time;
+	size_t			sleep_time;
+	size_t			*last_eat;
 	pthread_mutex_t	*fork;
-//	pthread_mutex_t	act;
 	pthread_mutex_t	log;
 	pthread_mutex_t	_num_x;
 }	t_philo;
 
 size_t	get_left_index(size_t pthread_num, size_t rihgt_index);
 size_t	get_current_time(void);
-void	put_log(pthread_mutex_t *log, char *action, size_t pthread_index);
+void	put_log(pthread_mutex_t *log, char *action, size_t th_index);
 
-int		eating(t_philo *philo, size_t pthread_index);
+int		eating(t_philo *philo, size_t th_index);
 void	init_last_eat(t_philo *philo, size_t pthread_num);
 void	action_time(size_t time);
 void	set_num_x(t_philo *philo);
+bool	can_get_forks(t_philo *philo, size_t th_index);
 
 // philo.c
 int		init_t_philo(t_philo *philo);

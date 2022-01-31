@@ -1,14 +1,14 @@
 #include "philo.h"
 
-int	eating(t_philo *philo, size_t pthread_index)
+int	eating(t_philo *philo, size_t th_index)
 {
 	size_t	left_index;
 
-	left_index = get_left_index(philo->pthread_num, pthread_index);
-	put_log(&philo->log, "is eating", pthread_index);
-	philo->last_eat[pthread_index] = get_current_time();
+	left_index = get_left_index(philo->pthread_num, th_index);
+	put_log(&philo->log, "is eating", th_index);
+	philo->last_eat[th_index] = get_current_time();
 	action_time(philo->eat_time);
-	if (pthread_mutex_unlock(&philo->fork[pthread_index]) != 0)
+	if (pthread_mutex_unlock(&philo->fork[th_index]) != 0)
 		return (ERROR);
 	if (pthread_mutex_unlock(&philo->fork[left_index]) != 0)
 		return (ERROR);
