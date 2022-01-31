@@ -7,21 +7,21 @@ int	init_t_philo(t_philo *philo)
 	i = 0;
 	philo->is_dead = false;
 	philo->fork = (pthread_mutex_t *)ft_calloc
-		(philo->pthread_num, sizeof(pthread_mutex_t));
-	philo->last_eat = (size_t *)ft_calloc(philo->pthread_num, sizeof(size_t));
+		(philo->th_num, sizeof(pthread_mutex_t));
+	philo->last_eat = (size_t *)ft_calloc(philo->th_num, sizeof(size_t));
 	if (philo->fork == NULL || philo->last_eat == NULL)
 	{
 		ft_free((void **)&philo->fork, (void **)&philo->last_eat);
 		return (ERROR);
 	}
-	while (i < philo->pthread_num)
+	while (i < philo->th_num)
 	{
 		if (pthread_mutex_init(&philo->fork[i++], NULL) != 0)
 			return (ERROR);
 	}
 	if (pthread_mutex_init(&philo->log, NULL) != 0)
 		return (ERROR);
-	init_last_eat(philo, philo->pthread_num);
+	init_last_eat(philo, philo->th_num);
 	pthread_mutex_init(&philo->_num_x, NULL);
 	return (0);
 }

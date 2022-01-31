@@ -8,10 +8,10 @@ size_t	get_current_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-size_t	get_left_index(size_t pthread_num, size_t rihgt_index)
+size_t	get_left_index(size_t th_num, size_t rihgt_index)
 {
 	if (rihgt_index == 0)
-		return (pthread_num - 1);
+		return (th_num - 1);
 	return (rihgt_index - 1);
 }
 

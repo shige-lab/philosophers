@@ -12,12 +12,26 @@
 
 #include "philo.h"
 
-int	get_info_from_argv(t_philo *philo, char **argv)
+int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 {
-	philo->pthread_num = atoi(argv[1]);
-	philo->die_time = 800;
-	philo->eat_time = 500;
-	philo->sleep_time = 350;
+	if (argc != 5 && argc != 6)
+		return (ERROR);
+	if (is_str_unsigned_num_by_atoi(&philo->th_num, argv[1]) == false)
+		return (ERROR);
+	if (is_str_unsigned_num_by_atoi(&philo->die_time, argv[2]) == false)
+		return (ERROR);
+	if (is_str_unsigned_num_by_atoi(&philo->eat_time, argv[3]) == false)
+		return (ERROR);
+	if (is_str_unsigned_num_by_atoi(&philo->sleep_time, argv[4]) == false)
+		return (ERROR);
+	if (argv[5])
+	{
+		if (is_str_unsigned_num_by_atoi(&philo->eat_limit, argv[5]) == false)
+			return (ERROR);
+	}
+	else
+		philo->eat_limit = 0;
+	debug_philo(philo);
 	return (0);
 }
 
@@ -26,7 +40,7 @@ bool	can_get_forks(t_philo *philo, size_t th_index)
 	size_t	left_index;
 	bool	flag;
 
-	left_index = get_left_index(philo->pthread_num, th_index);
+	left_index = get_left_index(philo->th_num, th_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
 		put_log(&philo->log, "has taken a fork", th_index);
@@ -50,16 +64,16 @@ int	main(int argc, char **argv)
 	t_philo		philo;
 	size_t		i;
 
-	if (get_info_from_argv(&philo, argv) == ERROR)
+	if (get_info_from_argv(&philo, argc, argv) == ERROR)
 		return (1);
-	pthread = (pthread_t *)calloc(philo.pthread_num, sizeof(pthread_t));
+	pthread = (pthread_t *)calloc(philo.th_num, sizeof(pthread_t));
 	if (pthread == NULL)
 		return (1);
 	if (init_t_philo(&philo) == ERROR)
 		return (1);
 	i = 0;
 	philo.num_x = 0;
-	while (i < philo.pthread_num)
+	while (i < philo.th_num)
 	{
 		if (pthread_create(&pthread[i], NULL, start_philo_life, &philo) != 0)
 			return (0);

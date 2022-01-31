@@ -4,7 +4,7 @@ int	eating(t_philo *philo, size_t th_index)
 {
 	size_t	left_index;
 
-	left_index = get_left_index(philo->pthread_num, th_index);
+	left_index = get_left_index(philo->th_num, th_index);
 	put_log(&philo->log, "is eating", th_index);
 	philo->last_eat[th_index] = get_current_time();
 	action_time(philo->eat_time);
@@ -15,13 +15,13 @@ int	eating(t_philo *philo, size_t th_index)
 	return (0);
 }
 
-void	init_last_eat(t_philo *philo, size_t pthread_num)
+void	init_last_eat(t_philo *philo, size_t th_num)
 {
 	size_t	i;
 	size_t	current_time;
 
 	i = 0;
 	current_time = get_current_time();
-	while (i < pthread_num)
+	while (i < th_num)
 		philo->last_eat[i++] = current_time;
 }
