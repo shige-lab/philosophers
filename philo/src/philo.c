@@ -40,16 +40,16 @@ void	*start_philo_life(void *p)
 	{
 		if (get_current_time() - philo->last_eat[th_index] > philo->die_time)
 		{
-			put_log(&philo->log, "died", th_index);
+			put_log(&philo->log, "died", th_index, "\033[035m");
 			philo->is_dead = true;
 			return (NULL);
 		}
 		if (can_get_forks(philo, th_index) == true)
 		{
 			eating(philo, th_index);
-			put_log(&philo->log, "is sleeping", th_index);
+			put_log(&philo->log, "is sleeping", th_index, "\033[036m");
 			action_time(philo->sleep_time);
-			put_log(&philo->log, "is thinking", th_index);
+			put_log(&philo->log, "is thinking", th_index, "\033[033m");
 		}
 	}
 	return (NULL);

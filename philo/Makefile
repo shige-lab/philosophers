@@ -1,6 +1,6 @@
 NAME = philo
 CC = gcc
-CFLAGS = -g # -fsanitize=thread  #-Wall -Wextra -Werror
+CFLAGS = -g #-fsanitize=thread  #-Wall -Wextra -Werror
 LIBFT = libft/libft.a
 SRCS =  src/main.c src/utils.c src/eat.c src/philo.c src/debug.c
 OBJS = $(SRCS:%.c=%.o)

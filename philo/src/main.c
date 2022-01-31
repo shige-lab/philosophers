@@ -40,7 +40,7 @@ bool	can_get_forks(t_philo *philo, size_t th_index)
 	left_index = get_left_index(philo->th_num, th_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
-		put_log(&philo->log, "has taken a fork", th_index);
+		put_log(&philo->log, "has taken a fork", th_index, "\033[032m");
 		if (pthread_mutex_lock(&philo->fork[th_index]) != 0)
 		{
 			pthread_mutex_unlock(&philo->fork[left_index]);
@@ -48,7 +48,7 @@ bool	can_get_forks(t_philo *philo, size_t th_index)
 		}
 		else
 		{
-			put_log(&philo->log, "has taken a fork", th_index);
+			put_log(&philo->log, "has taken a fork", th_index, "\033[032m");
 			flag = true;
 		}
 	}
