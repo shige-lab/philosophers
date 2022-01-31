@@ -56,4 +56,7 @@ void	*start_philo_life(void *p);
 // debug.c
 void	debug_philo(t_philo *philo);
 
+//utils2.c
+void	free_all(t_philo *philo, pthread_t *pthread);
+
 #endif

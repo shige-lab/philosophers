@@ -72,7 +72,10 @@ int	main(int argc, char **argv)
 		return (1);
 	pthread = (pthread_t *)calloc(philo.th_num, sizeof(pthread_t));
 	if (pthread == NULL || init_t_philo(&philo) == ERROR)
+	{
+		free_all(&philo, pthread);
 		return (1);
+	}
 	i = 0;
 	philo.num_x = 0;
 	while (i < philo.th_num)
@@ -84,10 +87,9 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	while (true)
-	{
 		if (philo.is_dead == true)
 			break ;
-	}
+	free_all(&philo, pthread);
 //	system("leaks philo");
 	return (0);
 }
