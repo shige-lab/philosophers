@@ -51,22 +51,34 @@ int	init_t_philo(t_philo *philo)
 bool	can_get_forks(t_philo *philo, size_t pthread_index)
 {
 	size_t	left_index;
+	bool	flag;
 
 	left_index = get_left_index(philo->pthread_num, pthread_index);
+	fprintf(stderr, "%s %d: %zu %zu\n", __FILE__, __LINE__, left_index, pthread_index );
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
 		put_log(&philo->log, "has token a fork", pthread_index);
+		if (left_index == pthread_index)
+		{
+			pthread_mutex_destroy(&philo->act);
+			return (false);
+		}
 		if (pthread_mutex_lock(&philo->fork[pthread_index]) != 0)
 		{
 			pthread_mutex_unlock(&philo->fork[left_index]);
-			return (false);
+			flag = false;
+		}
+		else
+		{
+			put_log(&philo->log, "has token a fork", pthread_index);
+			flag = true;
 		}
 	}
-	put_log(&philo->log, "has token a fork", pthread_index);
-	return (true);
+	pthread_mutex_unlock(&philo->act);
+	return (flag);
 }
 
-void	start_philo_life(void *p)
+void	*start_philo_life(void *p)
 {
 	t_philo	*philo;
 	size_t	pthread_index;
@@ -80,13 +92,13 @@ void	start_philo_life(void *p)
 		{
 			put_log(&philo->log, "is dead", pthread_index);
 			philo->is_dead = true;
-			return ;
+			return (NULL);
 		}
 		if (pthread_mutex_lock(&philo->act) == 0)
 		{
+			fprintf(stderr, "%s %d: %zu\n", __FILE__, __LINE__, pthread_index + 1);
 			if (can_get_forks(philo, pthread_index) == true)
 			{
-				pthread_mutex_unlock(&philo->act);
 				eating(philo, pthread_index);
 				put_log(&philo->log, "is sleeping", pthread_index);
 				action_time(philo->sleep_time);
@@ -96,6 +108,7 @@ void	start_philo_life(void *p)
 				pthread_mutex_unlock(&philo->act);
 		}
 	}
+	return (NULL);
 }
 
 void	set_num_x(t_philo *philo, size_t i)
