@@ -15,9 +15,9 @@
 int	get_info_from_argv(t_philo *philo, char **argv)
 {
 	philo->pthread_num = atoi(argv[1]);
-	philo->die_time =	600;
-	philo->eat_time = 300000;
-	philo->sleep_time = 400000;
+	philo->die_time =	900;
+	philo->eat_time = 400;
+	philo->sleep_time = 400;
 	return (0);
 }
 
@@ -43,6 +43,7 @@ int	init_t_philo(t_philo *philo)
 		return (ERROR);
 	if (pthread_mutex_init(&philo->log, NULL) != 0)
 		return (ERROR);
+	init_last_eat(philo->last_eat, philo->pthread_num);
 	return (0);
 }
 
@@ -53,14 +54,14 @@ bool	can_get_forks(t_philo *philo, size_t pthread_index)
 	left_index = get_left_index(philo->pthread_num, pthread_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
-		put_log(&philo->log, "has token a fork", pthread_index + 1);
+		put_log(&philo->log, "has token a fork", pthread_index);
 		if (pthread_mutex_lock(&philo->fork[pthread_index]) != 0)
 		{
 			pthread_mutex_unlock(&philo->fork[left_index]);
 			return (false);
 		}
 	}
-	put_log(&philo->log, "has token a fork", pthread_index + 1);
+	put_log(&philo->log, "has token a fork", pthread_index);
 	return (true);
 }
 
@@ -79,12 +80,17 @@ void	start_philo_life(void *p)
 			{
 				pthread_mutex_unlock(&philo->act);
 				eating(philo, pthread_index);
-				put_log(&philo->log, "is sleeping", pthread_index + 1);
-				usleep(philo->sleep_time);
-				put_log(&philo->log, "is thinking", pthread_index + 1);
+				put_log(&philo->log, "is sleeping", pthread_index);
+				action_time(philo->sleep_time);
+				put_log(&philo->log, "is thinking", pthread_index);
 			}
 			else
 				pthread_mutex_unlock(&philo->act);
+		}
+		if (get_current_time() - philo->last_eat[pthread_index] > philo->die_time)
+		{
+			put_log(&philo->log, "is dead", pthread_index);(&philo->log, "is thinking", pthread_index);
+			philo->is_dead = true;
 		}
 	}
 }
