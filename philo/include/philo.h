@@ -22,7 +22,6 @@
 # include "../libft/libft.h"
 
 # define ERROR -1
-# define DEAD 1
 
 typedef struct s_philo
 {
@@ -44,7 +43,7 @@ size_t	get_left_index(size_t th_num, size_t rihgt_index);
 size_t	get_current_time(void);
 void	put_log(pthread_mutex_t *log, char *action, size_t th_index, char *color);
 
-int		eating(t_philo *philo, size_t th_index);
+void	eating(t_philo *philo, size_t th_index);
 void	init_last_eat(t_philo *philo, size_t th_num);
 void	action_time(size_t time);
 void	set_num_x(t_philo *philo, int *th_index);

@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int	eating(t_philo *philo, size_t th_index)
+void	eating(t_philo *philo, size_t th_index)
 {
 	size_t	left_index;
 
@@ -12,7 +12,6 @@ int	eating(t_philo *philo, size_t th_index)
 	pthread_mutex_unlock(&philo->fork[left_index]);
 	if (philo->eat_limit)
 		philo->eat_times[th_index] += 1;
-	return (0);
 }
 
 void	init_last_eat(t_philo *philo, size_t th_num)

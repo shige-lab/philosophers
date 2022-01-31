@@ -71,9 +71,7 @@ int	main(int argc, char **argv)
 	if (get_info_from_argv(&philo, argc, argv) == ERROR)
 		return (1);
 	pthread = (pthread_t *)calloc(philo.th_num, sizeof(pthread_t));
-	if (pthread == NULL)
-		return (1);
-	if (init_t_philo(&philo) == ERROR)
+	if (pthread == NULL || init_t_philo(&philo) == ERROR)
 		return (1);
 	i = 0;
 	philo.num_x = 0;
