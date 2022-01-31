@@ -8,7 +8,7 @@ int	init_t_philo(t_philo *philo)
 	philo->is_dead = false;
 	philo->fork = (pthread_mutex_t *)ft_calloc
 		(philo->th_num, sizeof(pthread_mutex_t));
-	philo->last_eat = (size_t *)ft_calloc(philo->th_num, sizeof(size_t));
+	philo->last_eat = (size_t *)ft_calloc((size_t)philo->th_num, sizeof(size_t));
 	if (philo->fork == NULL || philo->last_eat == NULL)
 	{
 		ft_free((void **)&philo->fork, (void **)&philo->last_eat);
@@ -28,14 +28,11 @@ int	init_t_philo(t_philo *philo)
 
 void	*start_philo_life(void *p)
 {
+	int		th_index;
 	t_philo	*philo;
-	size_t	th_index;
 
 	philo = p;
-	set_num_x(philo);
-	th_index = philo->num_x;
-	philo->num_x++;
-	pthread_mutex_unlock(&philo->_num_x);
+	set_num_x(philo, &th_index);
 	while (true)
 	{
 		if (get_current_time() - philo->last_eat[th_index] > philo->die_time)
@@ -46,7 +43,8 @@ void	*start_philo_life(void *p)
 		}
 		if (can_get_forks(philo, th_index) == true)
 		{
-			eating(philo, th_index);
+			if (eating(philo, th_index) == DEAD)
+				return (NULL);
 			put_log(&philo->log, "is sleeping", th_index, "\033[036m");
 			action_time(philo->sleep_time);
 			put_log(&philo->log, "is thinking", th_index, "\033[033m");

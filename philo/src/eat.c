@@ -8,10 +8,16 @@ int	eating(t_philo *philo, size_t th_index)
 	put_log(&philo->log, "is eating", th_index, "\033[031m");
 	philo->last_eat[th_index] = get_current_time();
 	action_time(philo->eat_time);
-	if (pthread_mutex_unlock(&philo->fork[th_index]) != 0)
-		return (ERROR);
-	if (pthread_mutex_unlock(&philo->fork[left_index]) != 0)
-		return (ERROR);
+	pthread_mutex_unlock(&philo->fork[th_index]);
+	pthread_mutex_unlock(&philo->fork[left_index]);
+	if (philo->eat_limit)
+		philo->eat_times[th_index] += 1;
+	if (philo->eat_limit < philo->eat_times[th_index])
+	{
+		put_log(&philo->log, "died", th_index, "\033[035m");
+		philo->is_dead = true;
+		return (DEAD);
+	}
 	return (0);
 }
 

@@ -22,13 +22,7 @@
 # include "../libft/libft.h"
 
 # define ERROR -1
-//typedef struct s_data
-//{
-//	size_t	th_num;
-//	size_t	eat_time;
-//	size_t	die_time;
-//	size_t	sleep_time;
-//}	t_data;
+# define DEAD 1
 
 typedef struct s_philo
 {
@@ -39,6 +33,7 @@ typedef struct s_philo
 	int				die_time;
 	int				sleep_time;
 	int				eat_limit;
+	int				*eat_times;
 	size_t			*last_eat;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	log;
@@ -52,7 +47,7 @@ void	put_log(pthread_mutex_t *log, char *action, size_t th_index, char *color);
 int		eating(t_philo *philo, size_t th_index);
 void	init_last_eat(t_philo *philo, size_t th_num);
 void	action_time(size_t time);
-void	set_num_x(t_philo *philo);
+void	set_num_x(t_philo *philo, int *th_index);
 bool	can_get_forks(t_philo *philo, size_t th_index);
 
 // philo.c

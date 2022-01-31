@@ -36,12 +36,15 @@ void	action_time(size_t time)
 		usleep(100);
 }
 
-void	set_num_x(t_philo *philo)
+void	set_num_x(t_philo *philo, int *th_index)
 {
 	while (true)
 	{
 		if (pthread_mutex_lock(&philo->_num_x) == 0)
 		{
+			*th_index = philo->num_x;
+			philo->num_x++;
+			pthread_mutex_unlock(&philo->_num_x);
 			return ;
 		}
 	}
