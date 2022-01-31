@@ -49,6 +49,8 @@ size_t	get_left_index(size_t pthread_num, size_t rihgt_index);
 size_t	get_current_time(void);
 void	put_log(pthread_mutex_t *log, char *action, size_t pthread_index);
 
-int	eating(t_philo *philo, size_t pthread_index);
+int		eating(t_philo *philo, size_t pthread_index);
+void	init_last_eat(size_t *last_eat, size_t pthread_num);
+void	action_time(size_t time);
 
 #endif
