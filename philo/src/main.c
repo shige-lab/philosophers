@@ -16,13 +16,10 @@ int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
 		return (ERROR);
-	if (is_str_unsigned_num_by_atoi(&philo->th_num, argv[1]) == false)
-		return (ERROR);
-	if (is_str_unsigned_num_by_atoi(&philo->die_time, argv[2]) == false)
-		return (ERROR);
-	if (is_str_unsigned_num_by_atoi(&philo->eat_time, argv[3]) == false)
-		return (ERROR);
-	if (is_str_unsigned_num_by_atoi(&philo->sleep_time, argv[4]) == false)
+	if (is_str_unsigned_num_by_atoi(&philo->th_num, argv[1]) == false
+		|| is_str_unsigned_num_by_atoi(&philo->die_time, argv[2]) == false
+		|| is_str_unsigned_num_by_atoi(&philo->eat_time, argv[3]) == false
+		|| is_str_unsigned_num_by_atoi(&philo->sleep_time, argv[4]) == false)
 		return (ERROR);
 	if (argv[5])
 	{
