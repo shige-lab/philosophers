@@ -55,4 +55,8 @@ void	init_last_eat(t_philo *philo, size_t pthread_num);
 void	action_time(size_t time);
 void	set_num_x(t_philo *philo);
 
+// philo.c
+int		init_t_philo(t_philo *philo);
+void	*start_philo_life(void *p);
+
 #endif

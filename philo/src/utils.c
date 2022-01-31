@@ -35,3 +35,14 @@ void	action_time(size_t time)
 	while (get_current_time() - start < time)
 		usleep(100);
 }
+
+void	set_num_x(t_philo *philo)
+{
+	while (true)
+	{
+		if (pthread_mutex_lock(&philo->_num_x) == 0)
+		{
+			return ;
+		}
+	}
+}
