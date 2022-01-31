@@ -15,7 +15,7 @@
 int	get_info_from_argv(t_philo *philo, char **argv)
 {
 	philo->pthread_num = atoi(argv[1]);
-	philo->die_time =	800;
+	philo->die_time = 800;
 	philo->eat_time = 500;
 	philo->sleep_time = 350;
 	return (0);
@@ -25,6 +25,7 @@ bool	can_get_forks(t_philo *philo, size_t th_index)
 {
 	size_t	left_index;
 	bool	flag;
+
 	left_index = get_left_index(philo->pthread_num, th_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
@@ -69,7 +70,7 @@ int	main(int argc, char **argv)
 	while (true)
 	{
 		if (philo.is_dead == true)
-		break ;
+			break ;
 	}
 //	system("leaks philo");
 	return (0);
