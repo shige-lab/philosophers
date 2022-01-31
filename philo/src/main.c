@@ -15,7 +15,7 @@
 int	get_info_from_argv(t_philo *philo, char **argv)
 {
 	philo->pthread_num = atoi(argv[1]);
-	philo->die_time =	900;
+	philo->die_time =	799;
 	philo->eat_time = 400;
 	philo->sleep_time = 400;
 	return (0);
@@ -44,6 +44,7 @@ int	init_t_philo(t_philo *philo)
 	if (pthread_mutex_init(&philo->log, NULL) != 0)
 		return (ERROR);
 	init_last_eat(philo->last_eat, philo->pthread_num);
+	pthread_mutex_init(&philo->_num_x, NULL);
 	return (0);
 }
 
@@ -72,8 +73,15 @@ void	start_philo_life(void *p)
 
 	philo = p;
 	pthread_index = philo->num_x;
+	pthread_mutex_unlock(&philo->_num_x);
 	while (true)
 	{
+		if (get_current_time() - philo->last_eat[pthread_index] > philo->die_time)
+		{
+			put_log(&philo->log, "is dead", pthread_index);
+			philo->is_dead = true;
+			return ;
+		}
 		if (pthread_mutex_lock(&philo->act) == 0)
 		{
 			if (can_get_forks(philo, pthread_index) == true)
@@ -87,10 +95,17 @@ void	start_philo_life(void *p)
 			else
 				pthread_mutex_unlock(&philo->act);
 		}
-		if (get_current_time() - philo->last_eat[pthread_index] > philo->die_time)
+	}
+}
+
+void	set_num_x(t_philo *philo, size_t i)
+{
+	while (true)
+	{
+		if (pthread_mutex_lock(&philo->_num_x) == 0)
 		{
-			put_log(&philo->log, "is dead", pthread_index);(&philo->log, "is thinking", pthread_index);
-			philo->is_dead = true;
+			philo->num_x = i;
+			return ;
 		}
 	}
 }
@@ -111,10 +126,11 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < philo.pthread_num)
 	{
-		philo.num_x = i;
-		if (pthread_create(&pthread[0], NULL, start_philo_life, &philo) != 0)
+		set_num_x(&philo, i);
+		if (pthread_create(&pthread[i], NULL, start_philo_life, &philo) != 0)
 			return (0);
-		usleep(300);
+		usleep(100);
+		pthread_detach(pthread[i]);
 		i++;
 	}
 	while (true)

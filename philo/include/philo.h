@@ -43,6 +43,7 @@ typedef struct s_philo
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	act;
 	pthread_mutex_t	log;
+	pthread_mutex_t	_num_x;
 }	t_philo;
 
 size_t	get_left_index(size_t pthread_num, size_t rihgt_index);
