@@ -12,18 +12,21 @@
 
 #include "philo.h"
 
-#ifdef LEAKS
-void	end(void)__attribute__((destructor));
-
-void	end(void)
-{
-	int	ret;
-
-	ret = system("leaks philo");
-	if (ret)
-		printf("\033[31m!leak detected!\033[0m\n");
-}
-#endif
+//#ifdef LEAKS
+//void	end(void)__attribute__((destructor));
+//
+//void	end(void)
+//{
+//	int	ret;
+//
+//	ret = system("leaks philo");
+//	system("leaks philo");
+//	if (ret)
+//	{
+//		printf("\033[31m!leak detected!\033[0m\n");
+//	}
+//}
+//#endif
 
 int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 {
@@ -45,7 +48,6 @@ int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 	}
 	else
 		philo->eat_limit = 0;
-	debug_philo(philo);
 	return (0);
 }
 
@@ -75,12 +77,12 @@ bool	can_get_forks(t_philo *philo, size_t th_index)
 	return (flag);
 }
 
-void	wait_until_someone_died(t_philo philo)
+void	wait_until_someone_died(t_philo *philo)
 {
 	while (true)
 	{
-		if (philo.is_dead == true)
-			break ;
+		if (philo->is_dead == true)
+			return ;
 	}
 }
 
@@ -108,7 +110,7 @@ int	main(int argc, char **argv)
 		pthread_detach(pthread[i]);
 		i++;
 	}
-	wait_until_someone_died(philo);
+	wait_until_someone_died(&philo);
 	free_all(&philo, pthread);
 	return (0);
 }
