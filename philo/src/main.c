@@ -96,21 +96,17 @@ int	main(int argc, char **argv)
 		return (1);
 	pthread = (pthread_t *)calloc(philo.th_num, sizeof(pthread_t));
 	if (pthread == NULL || init_t_philo(&philo) == ERROR)
-	{
-		free_all(&philo, pthread);
-		return (1);
-	}
+		return (free_all(&philo, pthread, 1));
 	i = 0;
 	philo.num_x = 0;
 	while (i < philo.th_num)
 	{
 		if (pthread_create(&pthread[i], NULL, start_philo_life, &philo) != 0)
-			return (0);
+			return (free_all(&philo, pthread, 1));
 		usleep(400);
 		pthread_detach(pthread[i]);
 		i++;
 	}
 	wait_until_someone_died(&philo);
-	free_all(&philo, pthread);
-	return (0);
+	return (free_all(&philo, pthread, 0));
 }

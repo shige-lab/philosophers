@@ -58,6 +58,6 @@ void	*start_philo_life(void *p);
 void	debug_philo(t_philo *philo);
 
 //utils2.c
-void	free_all(t_philo *philo, pthread_t *pthread);
+int		free_all(t_philo *philo, pthread_t *pthread, int return_value);
 
 #endif
