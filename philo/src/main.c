@@ -82,8 +82,12 @@ void	wait_until_someone_died(t_philo *philo)
 	while (true)
 	{
 		if (philo->is_dead == true)
-			return ;
+			break ;
 	}
+	if (philo->eat_time > philo->sleep_time)
+		usleep(philo->eat_time);
+	else
+		usleep(philo->sleep_time);
 }
 
 int	main(int argc, char **argv)

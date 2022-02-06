@@ -31,7 +31,7 @@ void	*start_philo_life(void *p)
 
 	philo = p;
 	set_num_x(philo, &th_index);
-	while (true)
+	while (philo->is_dead == false)
 	{
 		if (get_current_time() - philo->last_eat[th_index] > philo->die_time)
 		{
@@ -42,6 +42,8 @@ void	*start_philo_life(void *p)
 		if (can_get_forks(philo, th_index) == true)
 		{
 			eating(philo, th_index);
+			if (philo->is_dead == true)
+				return (NULL);
 			put_log(&philo->log, "is sleeping", th_index, "\033[036m");
 			action_time(philo->sleep_time);
 			put_log(&philo->log, "is thinking", th_index, "\033[033m");
