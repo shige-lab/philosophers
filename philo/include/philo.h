@@ -41,7 +41,8 @@ typedef struct s_philo
 
 size_t	get_left_index(size_t th_num, size_t rihgt_index);
 size_t	get_current_time(void);
-void	put_log(pthread_mutex_t *log, char *action, size_t th_index, char *color);
+void	put_log(pthread_mutex_t *log, char *action,
+			size_t th_index, char *color);
 
 void	eating(t_philo *philo, size_t th_index);
 void	init_last_eat(t_philo *philo, size_t th_num);

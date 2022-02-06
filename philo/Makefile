@@ -27,14 +27,15 @@ fclean: clean
 re: fclean all
 
 s:
-	$(CC) -g -fsanitize=thread $(CFLAGS) $(INCLUDE) -o $(NAME) $(OBJS) $(LIBFT)
+	$(CC) -g -fsanitize=thread $(CFLAGS) $(INLCLUDE) -o $(NAME) $(OBJS) $(LIBFT)
+leak: $(OBJS)
+	$(CC) $(CFLAGS) -D LEAKS=1 $(INCLUDE) -o $(NAME) $(OBJS) $(LIBFT)
 
 
 test: $(NAME)
-	./philo
-t: $(NAME)
-	$(CC) $(CFLAGS) $(NAME) main.c
-test-: $(NAME)
-	$(CC) $(NAME) main.c &&./a.out
+	./philo 5 800 500 500
 
-.PHONY: all clean fclean re empty
+norm:
+	norminette src libft include | grep Error
+
+.PHONY: all clean fclean re empty norm test s leak
