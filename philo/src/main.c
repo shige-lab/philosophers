@@ -42,7 +42,7 @@ int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 		if (is_str_unsigned_num_by_atoi(&philo->eat_limit, argv[5]) == false)
 			return (ERROR);
 		philo->eat_times = (int *)ft_calloc
-			((int)philo->th_num, sizeof(int));
+			((size_t)philo->th_num + 1, sizeof(int));
 		if (philo->eat_times == NULL)
 			return (ERROR);
 	}

@@ -7,9 +7,9 @@ int	init_t_philo(t_philo *philo)
 	i = 0;
 	philo->is_dead = false;
 	philo->fork = (pthread_mutex_t *)ft_calloc
-		(philo->th_num, sizeof(pthread_mutex_t));
+		(philo->th_num + 1, sizeof(pthread_mutex_t));
 	philo->last_eat = (size_t *)ft_calloc
-		((size_t)philo->th_num, sizeof(size_t));
+		((size_t)philo->th_num + 1, sizeof(size_t));
 	if (philo->fork == NULL || philo->last_eat == NULL)
 		return (ERROR);
 	while (i < philo->th_num)
