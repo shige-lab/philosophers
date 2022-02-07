@@ -1,3 +1,0 @@
-[submodule "philo/libft"]
-	path = philo/libft
-	url = git@github.com:shige-lab/libft.git
