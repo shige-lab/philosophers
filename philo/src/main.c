@@ -94,12 +94,12 @@ int	main(int argc, char **argv)
 {
 	pthread_t	*pthread;
 	t_philo		philo;
-	size_t		i;
+	int			i;
 
 	if (get_info_from_argv(&philo, argc, argv) == ERROR)
 		return (1);
 	pthread = (pthread_t *)calloc(philo.th_num, sizeof(pthread_t));
-	if (pthread == NULL || init_t_philo(&philo) == ERROR)
+	if (init_t_philo(&philo) == ERROR || pthread == NULL)
 		return (free_all(&philo, pthread, 1));
 	i = 0;
 	philo.num_x = 0;

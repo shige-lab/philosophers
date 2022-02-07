@@ -1,8 +1,8 @@
 NAME = philo
 CC = gcc
-CFLAGS =  #-Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror -pthread
 LIBFT = libft/libft.a
-SRCS =  src/main.c src/utils.c src/utils2.c src/eat.c src/philo.c src/debug.c
+SRCS =  src/main.c src/philo.c src/eat.c src/utils.c src/utils2.c src/debug.c
 OBJS = $(SRCS:%.c=%.o)
 INCLUDE = -I include/
 

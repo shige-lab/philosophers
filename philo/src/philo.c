@@ -2,7 +2,7 @@
 
 int	init_t_philo(t_philo *philo)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	philo->is_dead = false;
@@ -33,7 +33,7 @@ void	*start_philo_life(void *p)
 	set_num_x(philo, &th_index);
 	while (philo->is_dead == false)
 	{
-		if (get_current_time() - philo->last_eat[th_index] > philo->die_time)
+		if (get_current_time() - philo->last_eat[th_index] > (size_t)philo->die_time)
 		{
 			put_log(&philo->log, "died", th_index, "\033[035m");
 			philo->is_dead = true;
