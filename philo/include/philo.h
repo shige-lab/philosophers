@@ -55,7 +55,7 @@ int		init_t_philo(t_philo *philo);
 void	*start_philo_life(void *p);
 
 // debug.c
-void	debug_philo(t_philo *philo);
+//void	debug_philo(t_philo *philo);
 
 //utils2.c
 int		free_all(t_philo *philo, pthread_t *pthread, int return_value);
