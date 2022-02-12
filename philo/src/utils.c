@@ -23,11 +23,8 @@ void	put_log(pthread_mutex_t *log, char *action,
 		if (pthread_mutex_lock(log) == 0)
 			break ;
 	}
-	(void)color;
-	printf("%zu %zu %s\n", get_current_time(), th_index + 1,
+	printf("%zu %zu %s%s\033[0m\n", get_current_time(), th_index + 1, color,
 		action);
-//	printf("%zu %zu %s%s\033[0m\n", get_current_time(), th_index + 1, color,
-//		action);
 	if (ft_strcmp(action, "died") != 0)
 		pthread_mutex_unlock(log);
 }
