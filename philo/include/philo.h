@@ -53,6 +53,8 @@ bool	can_get_forks(t_philo *philo, size_t th_index);
 // philo.c
 int		init_t_philo(t_philo *philo);
 void	*start_philo_life(void *p);
+void	*start_philo_life_for_one(void *p);
+int		philo_one_life(t_philo *philo, pthread_t *pthread);
 
 // debug.c
 //void	debug_philo(t_philo *philo);

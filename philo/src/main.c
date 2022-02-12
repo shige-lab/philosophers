@@ -12,22 +12,6 @@
 
 #include "philo.h"
 
-//#ifdef LEAKS
-//void	end(void)__attribute__((destructor));
-//
-//void	end(void)
-//{
-//	int	ret;
-//
-//	ret = system("leaks philo");
-//	system("leaks philo");
-//	if (ret)
-//	{
-//		printf("\033[31m!leak detected!\033[0m\n");
-//	}
-//}
-//#endif
-
 int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
@@ -103,6 +87,8 @@ int	main(int argc, char **argv)
 		return (free_all(&philo, pthread, 1));
 	i = 0;
 	philo.num_x = 0;
+	if (philo.th_num == 1)
+		return (philo_one_life(&philo, pthread));
 	while (i < philo.th_num)
 	{
 		if (pthread_create(&pthread[i], NULL, start_philo_life, &philo) != 0)

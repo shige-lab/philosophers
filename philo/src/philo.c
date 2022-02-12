@@ -24,6 +24,30 @@ int	init_t_philo(t_philo *philo)
 	return (0);
 }
 
+void	*start_philo_life_for_one(void *p)
+{
+	t_philo	*philo;
+	bool	is_fork_using;
+
+	philo = p;
+	is_fork_using = false;
+	while (true)
+	{
+		if (get_current_time() - philo->last_eat[0] > (size_t)philo->die_time)
+		{
+			printf("%zu 1 \033[035mdied\033[0m\n", get_current_time());
+			philo->is_dead = true;
+			return (NULL);
+		}
+		if (is_fork_using == false)
+		{
+			printf("%zu 1 \033[032mhas taken a fork\033[0m\n", get_current_time());
+			is_fork_using = true;
+		}
+	}
+	return (NULL);
+}
+
 void	*start_philo_life(void *p)
 {
 	int		th_index;
@@ -51,4 +75,17 @@ void	*start_philo_life(void *p)
 		}
 	}
 	return (NULL);
+}
+
+int	philo_one_life(t_philo *philo, pthread_t *pthread)
+{
+	if (pthread_create(&pthread[0], NULL, start_philo_life_for_one, philo))
+		return (free_all(philo, pthread, 1));
+	pthread_detach(pthread[0]);
+	while (true)
+	{
+		if (philo->is_dead == true)
+			break ;
+	}
+	return (free_all(philo, pthread, 0));
 }
