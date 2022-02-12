@@ -25,7 +25,7 @@
 
 typedef struct s_philo
 {
-	bool			is_dead;
+	bool			is_end;
 	int				num_x;
 	int				th_num;
 	int				eat_time;
@@ -61,5 +61,7 @@ int		philo_one_life(t_philo *philo, pthread_t *pthread);
 
 //utils2.c
 int		free_all(t_philo *philo, pthread_t *pthread, int return_value);
+void	sleep_and_think(t_philo *philo, int th_index);
+void	check_eat_times(t_philo *philo);
 
 #endif

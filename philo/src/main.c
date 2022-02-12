@@ -17,13 +17,15 @@ int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 	if (argc != 5 && argc != 6)
 		return (ERROR);
 	if (is_str_unsigned_num_by_atoi(&philo->th_num, argv[1]) == false
+		|| philo->th_num == 0
 		|| is_str_unsigned_num_by_atoi(&philo->die_time, argv[2]) == false
 		|| is_str_unsigned_num_by_atoi(&philo->eat_time, argv[3]) == false
 		|| is_str_unsigned_num_by_atoi(&philo->sleep_time, argv[4]) == false)
 		return (ERROR);
 	if (argv[5])
 	{
-		if (is_str_unsigned_num_by_atoi(&philo->eat_limit, argv[5]) == false)
+		if (is_str_unsigned_num_by_atoi(&philo->eat_limit, argv[5]) == false
+			|| philo->eat_limit == 0)
 			return (ERROR);
 		philo->eat_times = (int *)ft_calloc
 			((size_t)philo->th_num + 1, sizeof(int));
@@ -41,8 +43,6 @@ bool	can_get_forks(t_philo *philo, size_t th_index)
 	bool	flag;
 
 	flag = false;
-	if (philo->eat_limit && philo->eat_limit == philo->eat_times[th_index])
-		return (flag);
 	left_index = get_left_index(philo->th_num, th_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
@@ -65,7 +65,8 @@ void	wait_until_someone_died(t_philo *philo)
 {
 	while (true)
 	{
-		if (philo->is_dead == true)
+		check_eat_times(philo);
+		if (philo->is_end == true)
 			break ;
 	}
 	if (philo->eat_time > philo->sleep_time)
