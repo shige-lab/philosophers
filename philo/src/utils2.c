@@ -24,7 +24,7 @@ void	check_eat_times(t_philo *philo)
 
 	i = 0;
 	eat_enough_times = true;
-	while (i < philo->th_num || philo->is_end == false)
+	while (i < philo->th_num && philo->is_end == false)
 	{
 		if (philo->eat_limit != philo->eat_times[i])
 			eat_enough_times = false;
