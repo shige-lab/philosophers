@@ -65,7 +65,8 @@ void	wait_until_someone_died(t_philo *philo)
 {
 	while (true)
 	{
-		check_eat_times(philo);
+		if (philo->eat_limit > 0)
+			check_eat_times(philo);
 		if (philo->is_end == true)
 			break ;
 	}
