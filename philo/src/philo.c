@@ -35,13 +35,13 @@ void	*start_philo_life_for_one(void *p)
 	{
 		if (get_current_time() - philo->last_eat[0] > (size_t)philo->die_time)
 		{
-			printf("%zu 1 \033[035mdied\033[0m\n", get_current_time());
+			printf("%zu 1 died\n", get_current_time());
 			philo->is_end = true;
 			return (NULL);
 		}
 		if (is_fork_using == false)
 		{
-			printf("%zu 1 \033[032mhas taken a fork\033[0m\n", get_current_time());
+			printf("%zu 1 has taken a fork\n", get_current_time());
 			is_fork_using = true;
 		}
 	}
@@ -60,7 +60,7 @@ void	*start_philo_life(void *p)
 		if (get_current_time() - philo->last_eat[th_index]
 			> (size_t)philo->die_time)
 		{
-			put_log(&philo->log, "died", th_index, "\033[035m");
+			put_log(&philo->log, "died", th_index);
 			philo->is_end = true;
 		}
 		if (!philo->is_end && can_get_forks(philo, th_index) == true)

@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 21:57:36 by tshigena          #+#    #+#             */
-/*   Updated: 2022/01/04 22:32:32 by tshigena         ###   ########.fr       */
+/*   Updated: 2022/03/02 01:28:28 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,26 @@ int	get_info_from_argv(t_philo *philo, int argc, char **argv)
 bool	can_get_forks(t_philo *philo, size_t th_index)
 {
 	size_t	left_index;
-	bool	flag;
 
-	flag = false;
 	left_index = get_left_index(philo->th_num, th_index);
 	if (pthread_mutex_lock(&philo->fork[left_index]) == 0)
 	{
-		put_log(&philo->log, "has taken a fork", th_index, "\033[032m");
+		put_log(&philo->log, "has taken a fork", th_index);
 		if (pthread_mutex_lock(&philo->fork[th_index]) != 0)
 		{
 			pthread_mutex_unlock(&philo->fork[left_index]);
-			flag = false;
+			return (false);
 		}
 		else
-		{
-			put_log(&philo->log, "has taken a fork", th_index, "\033[032m");
-			flag = true;
-		}
+			put_log(&philo->log, "has taken a fork", th_index);
 	}
-	return (flag);
+	if (get_current_time() - philo->last_eat[th_index]
+		> (size_t)philo->die_time)
+	{
+		put_log(&philo->log, "died", th_index);
+		philo->is_end = true;
+	}
+	return (true);
 }
 
 void	wait_until_someone_died(t_philo *philo)

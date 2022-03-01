@@ -15,16 +15,14 @@ size_t	get_left_index(size_t th_num, size_t rihgt_index)
 	return (rihgt_index - 1);
 }
 
-void	put_log(pthread_mutex_t *log, char *action,
-			size_t th_index, char *color)
+void	put_log(pthread_mutex_t *log, char *action, size_t th_index)
 {
 	while (true)
 	{
 		if (pthread_mutex_lock(log) == 0)
 			break ;
 	}
-	printf("%zu %zu %s%s\033[0m\n", get_current_time(), th_index + 1, color,
-		action);
+	printf("%zu %zu %s\n", get_current_time(), th_index + 1, action);
 	if (ft_strcmp(action, "died") != 0)
 		pthread_mutex_unlock(log);
 }

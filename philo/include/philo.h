@@ -6,7 +6,7 @@
 /*   By: tshigena <tshigena@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 21:52:19 by tshigena          #+#    #+#             */
-/*   Updated: 2022/01/04 22:37:38 by tshigena         ###   ########.fr       */
+/*   Updated: 2022/03/02 01:34:23 by tshigena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ typedef struct s_philo
 
 size_t	get_left_index(size_t th_num, size_t rihgt_index);
 size_t	get_current_time(void);
-void	put_log(pthread_mutex_t *log, char *action,
-			size_t th_index, char *color);
+void	put_log(pthread_mutex_t *log, char *action, size_t th_index);
 
 void	eating(t_philo *philo, size_t th_index);
 void	init_last_eat(t_philo *philo, size_t th_num);
