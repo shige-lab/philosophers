@@ -12,9 +12,9 @@ int	free_all(t_philo *philo, pthread_t *pthread, int return_value)
 
 void	sleep_and_think(t_philo *philo, int th_index)
 {
-	put_log(&philo->log, "is sleeping", th_index, "\033[036m");
+	put_log(&philo->log, "is sleeping", th_index);
 	action_time(philo->sleep_time);
-	put_log(&philo->log, "is thinking", th_index, "\033[033m");
+	put_log(&philo->log, "is thinking", th_index);
 }
 
 void	check_eat_times(t_philo *philo)
