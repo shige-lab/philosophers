@@ -5,7 +5,7 @@ void	eating(t_philo *philo, size_t th_index)
 	size_t	left_index;
 
 	left_index = get_left_index(philo->th_num, th_index);
-	put_log(&philo->log, "is eating", th_index, "\033[031m");
+	put_log(&philo->log, "is eating", th_index);
 	philo->last_eat[th_index] = get_current_time();
 	action_time(philo->eat_time);
 	if (philo->is_end == true)
